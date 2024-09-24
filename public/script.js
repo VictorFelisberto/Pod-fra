@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Envia uma solicitação POST para o servidor com os dados de inscrição
-        const response = await fetch('https://pod-fra.vercel.app/api/register', {
+       const response = await fetch('/api/register', { // Mude de '/register' para '/api/register'
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Envia uma solicitação POST para o servidor com os dados de login
-        const response = await fetch('https://pod-fra.vercel.app/api/login', {
+        const response = await fetch('/api/login', { // Mude de '/login' para '/api/login'
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
