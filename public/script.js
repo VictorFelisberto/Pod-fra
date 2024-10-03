@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Envia uma solicitação POST para o servidor com os dados de inscrição
-        const response = await fetch('/register', {
+        const response = await fetch('https://pod-fra.vercel.app/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
