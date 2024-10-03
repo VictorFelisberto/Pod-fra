@@ -7,15 +7,19 @@ const User = require('./models/user');
 const app = express();
 
 // Configurar CORS para permitir requisições do frontend
-const allowedOrigins = ['https://pod-fra.vercel.app', 'http://localhost:3000'];
+const allowedOrigins = ['https://pod-3jl2x23n2-victorfelisbertos-projects.vercel.app', 'http://localhost:3000'];
 
 app.use(cors({
-    origin: function(origin, callback){
-        if(!origin) return callback(null, true);
-        if(allowedOrigins.indexOf(origin) === -1){
+    origin: function (origin, callback) {
+        // Permitir solicitações sem "origin" (como Postman)
+        if (!origin) return callback(null, true);
+
+        // Verifica se a origem está na lista permitida
+        if (allowedOrigins.indexOf(origin) === -1) {
             const msg = 'A origem ' + origin + ' não tem permissão de acesso.';
             return callback(new Error(msg), false);
         }
+
         return callback(null, true);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
