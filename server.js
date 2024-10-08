@@ -53,7 +53,7 @@ const validateEmailDomain = (email) => {
 };
 
 // Rota de registro de usuário
-app.post('/register', async (req, res) => {
+app.post('https://pod-fra.vercel.app/register', async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -85,7 +85,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Rota de login de usuário
-app.post('/login', async (req, res) => {
+app.post('https://pod-fra.vercel.app/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
