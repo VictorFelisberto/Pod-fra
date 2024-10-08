@@ -6,12 +6,12 @@ const loginBtn = document.getElementById('login');
 // Adiciona uma classe "active" ao contêiner quando o botão de registro é clicado
 registerBtn.addEventListener('click', () =>{
     container.classList.add("active");
-});
+})
 
 // Remove a classe "active" do contêiner quando o botão de login é clicado
 loginBtn.addEventListener('click', () =>{
     container.classList.remove("active");
-});
+})
 
 // -----------------------------------------------------------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Envia uma solicitação POST para o servidor com os dados de inscrição
-        const response = await fetch('https://pod-fra.vercel.app/register', {
+        const response = await fetch('/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Envia uma solicitação POST para o servidor com os dados de login
-        const response = await fetch('https://pod-fra.vercel.app/login', {
+        const response = await fetch('/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -103,3 +103,4 @@ document.addEventListener('DOMContentLoaded', () => {
         return emailRegex.test(email); // Retorna true se o e-mail for válido, false caso contrário
     }
 });
+
