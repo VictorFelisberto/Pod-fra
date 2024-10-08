@@ -7,24 +7,21 @@ const User = require('./models/user');
 const app = express();
 
 // Configurar CORS para permitir requisições do frontend
-const allowedOrigins = ['https://pod-3jl2x23n2-victorfelisbertos-projects.vercel.app', 'http://localhost:3000'];
+const allowedOrigins = ['https://podfra.vercel.app', 'http://localhost:3000'];
 
 app.use(cors({
-    origin: function (origin, callback) {
-        // Permitir solicitações sem "origin" (como Postman)
-        if (!origin) return callback(null, true);
-
-        // Verifica se a origem está na lista permitida
-        if (allowedOrigins.indexOf(origin) === -1) {
+    origin: function(origin, callback){
+        if(!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1){
             const msg = 'A origem ' + origin + ' não tem permissão de acesso.';
             return callback(new Error(msg), false);
         }
-
         return callback(null, true);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -49,11 +46,11 @@ app.use(express.static('public'));
 // Valida domínio do e-mail
 const validateEmailDomain = (email) => {
     const domain = email.split('@')[1];
-    return domain === 'sp.senac.br'; // Mantenha a lógica que você precisa
+    return domain === 'sp.senac.br';
 };
 
 // Rota de registro de usuário
-app.post('https://pod-fra.vercel.app/register', async (req, res) => {
+app.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -85,7 +82,7 @@ app.post('https://pod-fra.vercel.app/register', async (req, res) => {
 });
 
 // Rota de login de usuário
-app.post('https://pod-fra.vercel.app/login', async (req, res) => {
+app.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -111,7 +108,7 @@ app.post('https://pod-fra.vercel.app/login', async (req, res) => {
     }
 });
 
-// Rota de atualização de usuário (opcional, caso você precise)
+// Rota de atualização de usuário
 app.post('/update', async (req, res) => {
     const { email, password } = req.body;
 
