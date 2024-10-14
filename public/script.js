@@ -42,20 +42,32 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // Para a execução da função se o e-mail não for válido
         }
 
-        // Envia uma solicitação POST para o servidor com os dados de inscrição
-        const response = await fetch('/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, password }) // Envia os dados como JSON
-        });
+        try {
+            // Envia uma solicitação POST para o servidor com os dados de inscrição
+            const response = await fetch('https://your-backend.vercel.app/register', {  // Substitua pela URL do seu backend
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, password }) // Envia os dados como JSON
+            });
 
-        const data = await response.json(); // Converte a resposta para JSON
-        if (data.success) {
-            alert('Usuário registrado com sucesso!'); // Exibe uma mensagem de sucesso
-        } else {
-            alert('Erro ao registrar o usuário: ' + data.message); // Exibe uma mensagem de erro
+            if (!response.ok) {  // Verifica se a resposta não teve sucesso
+                const errorMessage = await response.text(); // Pega a resposta de erro como texto
+                alert('Erro ao registrar o usuário: ' + errorMessage);
+                return;
+            }
+
+            const data = await response.json(); // Converte a resposta para JSON
+
+            if (data.success) {
+                alert('Usuário registrado com sucesso!'); // Exibe uma mensagem de sucesso
+            } else {
+                alert('Erro ao registrar o usuário: ' + data.message); // Exibe uma mensagem de erro
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro na requisição ao servidor.');
         }
     });
 
@@ -79,21 +91,33 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // Para a execução da função se o e-mail não for válido
         }
 
-        // Envia uma solicitação POST para o servidor com os dados de login
-        const response = await fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password }) // Envia os dados como JSON
-        });
+        try {
+            // Envia uma solicitação POST para o servidor com os dados de login
+            const response = await fetch('https://your-backend.vercel.app/login', {  // Substitua pela URL do seu backend
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password }) // Envia os dados como JSON
+            });
 
-        const data = await response.json(); // Converte a resposta para JSON
-        if (data.success) {
-            // Redireciona para a página de podcasts em caso de sucesso no login
-            window.location.href = '/menuPodcasts.html';
-        } else {
-            alert('Erro ao fazer login: ' + data.message); // Exibe uma mensagem de erro
+            if (!response.ok) {  // Verifica se a resposta não teve sucesso
+                const errorMessage = await response.text(); // Pega a resposta de erro como texto
+                alert('Erro ao fazer login: ' + errorMessage);
+                return;
+            }
+
+            const data = await response.json(); // Converte a resposta para JSON
+
+            if (data.success) {
+                // Redireciona para a página de podcasts em caso de sucesso no login
+                window.location.href = '/menuPodcasts.html';
+            } else {
+                alert('Erro ao fazer login: ' + data.message); // Exibe uma mensagem de erro
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            alert('Erro na requisição ao servidor.');
         }
     });
 
@@ -103,4 +127,3 @@ document.addEventListener('DOMContentLoaded', () => {
         return emailRegex.test(email); // Retorna true se o e-mail for válido, false caso contrário
     }
 });
-
