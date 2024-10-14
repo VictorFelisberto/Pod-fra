@@ -131,3 +131,19 @@ app.post('/update', async (req, res) => {
         res.status(500).send({ success: false, message: 'Erro ao atualizar o cadastro' });
     }
 });
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: 'Ocorreu um erro no servidor. Tente novamente mais tarde.',
+    });
+});
+
+// Rota para lidar com rotas inexistentes (404)
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: 'Rota não encontrada',
+    });
+});
