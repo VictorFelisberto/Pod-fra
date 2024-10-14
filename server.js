@@ -7,22 +7,19 @@ const path = require('path'); // Para servir arquivos estáticos
 const User = require('./models/user');
 const app = express();
 
+app.use(express.static('public'));
+
 // Configurar CORS para permitir requisições do frontend
 const allowedOrigins = ['https://podfra.vercel.app', 'http://localhost:3000'];
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'A origem ' + origin + ' não tem permissão de acesso.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
+        // Permite requisições de qualquer origem, útil para testes na Vercel
+        callback(null, true);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
 // Middlewares para parse de JSON e URL-encoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -147,3 +144,8 @@ app.post('/update', async (req, res) => {
 // Servindo a página inicial (index.html) do diretório 'public'
 app.get('/', (req, res) => {
     res.sendFile(path.join
+// Middleware global de erro
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ success: false, message: 'Erro interno do servidor' });
+});
