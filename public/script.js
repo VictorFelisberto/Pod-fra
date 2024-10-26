@@ -6,14 +6,18 @@ const loginBtn = document.getElementById('login');
 // Adiciona uma classe "active" ao contêiner quando o botão de registro é clicado
 registerBtn.addEventListener('click', () => {
     container.classList.add("active");
-});
+})
 
 // Remove a classe "active" do contêiner quando o botão de login é clicado
 loginBtn.addEventListener('click', () => {
     container.classList.remove("active");
-});
+})
 
 // -----------------------------------------------------------------------------------------------------------------------
+
+// URL base para as requisições da API
+const BASE_URL = 'https://pod-fra.onrender.com';
+
 // Espera que o conteúdo do documento esteja completamente carregado antes de executar o código
 document.addEventListener('DOMContentLoaded', () => {
     // Obtendo referências aos formulários de inscrição e login
@@ -41,21 +45,25 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // Para a execução da função se o e-mail não for válido
         }
 
-        // Envia uma solicitação POST para o servidor com os dados de inscrição
-        const response = await fetch('https://your-backend.vercel.app/register', { // URL completa do backend
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, email, password }) // Envia os dados como JSON
-        });
-        
-        const data = await response.json(); // Converte a resposta para JSON
+        try {
+            // Envia uma solicitação POST para o servidor com os dados de inscrição
+            const response = await fetch(`${BASE_URL}/register`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, password }) // Envia os dados como JSON
+            });
 
-        if (data.success) {
-            alert('Usuário registrado com sucesso!'); // Exibe uma mensagem de sucesso
-        } else {
-            alert('Erro ao registrar o usuário: ' + data.message); // Exibe uma mensagem de erro
+            const data = await response.json(); // Converte a resposta para JSON
+            if (data.success) {
+                alert('Usuário registrado com sucesso!'); // Exibe uma mensagem de sucesso
+            } else {
+                alert('Erro ao registrar o usuário: ' + data.message); // Exibe uma mensagem de erro
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro de conexão com o servidor.');
         }
     });
 
@@ -79,22 +87,26 @@ document.addEventListener('DOMContentLoaded', () => {
             return; // Para a execução da função se o e-mail não for válido
         }
 
-        // Envia uma solicitação POST para o servidor com os dados de login
-        const response = await fetch('https://your-backend.vercel.app/login', { // URL completa do backend
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password }) // Envia os dados como JSON
-        });
+        try {
+            // Envia uma solicitação POST para o servidor com os dados de login
+            const response = await fetch(`${BASE_URL}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password }) // Envia os dados como JSON
+            });
 
-        const data = await response.json(); // Converte a resposta para JSON
-
-        if (data.success) {
-            // Redireciona para a página de podcasts em caso de sucesso no login
-            window.location.href = '/menuPodcasts.html';
-        } else {
-            alert('Erro ao fazer login: ' + data.message); // Exibe uma mensagem de erro
+            const data = await response.json(); // Converte a resposta para JSON
+            if (data.success) {
+                // Redireciona para a página de podcasts em caso de sucesso no login
+                window.location.href = '/menuPodcasts.html';
+            } else {
+                alert('Erro ao fazer login: ' + data.message); // Exibe uma mensagem de erro
+            }
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro de conexão com o servidor.');
         }
     });
 
