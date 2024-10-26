@@ -108,7 +108,7 @@ app.post('/login', async (req, res) => {
 });
 
 // Rota de atualização de usuário
-app.post('/esqueceuSenha.html/update', async (req, res) => {
+app.post('/update', async (req, res) => {
     const { email, password } = req.body;
 
     if (!validateEmailDomain(email)) {
