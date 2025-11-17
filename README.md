@@ -45,6 +45,8 @@ npm start             # ou nodemon se preferir hot-reload
 
 # 5. Acessar o frontend
 # Abrir no navegador: http://localhost:<PORT>
+```
+
 📄 Uso
 Acesse a página de cadastro e crie um novo usuário.
 
@@ -66,6 +68,8 @@ Copiar código
 ├── .env              # Variáveis de ambiente (não commitadas)  
 ├── server.js         # Ponto de entrada do backend  
 └── README.md
+
+
 ✅ O que aprendi
 A integração entre frontend e backend num projeto real de autenticação.
 
